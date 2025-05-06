@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
@@ -64,7 +63,7 @@ public class UIManager : MonoBehaviour
 
   public void ReloadScene()
   {
-    Time.timeScale = 1f; // Unpause before reload
+    Time.timeScale = 1f;
     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
   }
 
