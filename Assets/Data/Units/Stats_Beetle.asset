@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea419ec09fef44fcb4a4342ead46461, type: 3}
   m_Name: Stats_Beetle
   m_EditorClassIdentifier: 
-  unitName: 
-  moveSpeed: 0
-  maxHealth: 0
-  pointValue: 0
-  unitType: 0
+  unitName: Beetle
+  moveSpeed: 6
+  maxHealth: 6
+  damage: 2
+  unitType: 3

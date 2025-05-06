@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea419ec09fef44fcb4a4342ead46461, type: 3}
   m_Name: Stats_Ladybug
   m_EditorClassIdentifier: 
-  unitName: 
-  moveSpeed: 0
-  maxHealth: 0
-  pointValue: 0
-  unitType: 0
+  unitName: Ladybug
+  moveSpeed: 8
+  maxHealth: 2
+  damage: 1
+  unitType: 2
