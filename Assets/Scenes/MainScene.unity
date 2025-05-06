@@ -3556,7 +3556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 5404577902482729798, guid: 63acb48e8d59f43f595871fd8d5b806f, type: 3}
-  unitCount: 7
+  unitCount: 6
   spawnRadius: 3
   dontSpawnRadius: 2
   spawnGap: 1.5
@@ -5654,18 +5654,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 778197732}
     m_Modifications:
     - target: {fileID: 2694621114176250955, guid: b91c0279f420b427087e1200cac5c61c, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2694621114176250955, guid: b91c0279f420b427087e1200cac5c61c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2694621114176250955, guid: b91c0279f420b427087e1200cac5c61c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2694621114176250955, guid: b91c0279f420b427087e1200cac5c61c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -5708,10 +5696,6 @@ PrefabInstance:
     - target: {fileID: 7244687641311617224, guid: b91c0279f420b427087e1200cac5c61c, type: 3}
       propertyPath: m_Name
       value: Flag
-      objectReference: {fileID: 0}
-    - target: {fileID: 8355270682644321620, guid: b91c0279f420b427087e1200cac5c61c, type: 3}
-      propertyPath: outlineWidth
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
