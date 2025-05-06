@@ -16,7 +16,7 @@ MonoBehaviour:
   isFriendly: 0
   moveSpeed: 0.24
   maxHealth: 6
-  damage: 2
+  damage: 1.5
   value: 150
   flagRisk: 3
   unitType: 3

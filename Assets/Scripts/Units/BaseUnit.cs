@@ -9,6 +9,10 @@ public abstract class BaseUnit : MonoBehaviour
   protected Transform target;
   protected Vector3? moveToPosition = null;
 
+  protected BaseUnit currentTarget;
+  protected float attackCooldown = 1.0f;
+  private float attackTimer = 0f;
+  public float attackRange = 1f;
 
   private float walkAnimTimer = 0f;
   private Vector3 originalScale;
@@ -27,6 +31,15 @@ public abstract class BaseUnit : MonoBehaviour
     isMoving = true;
   }
 
+  public virtual void OnTargetDeath()
+  {
+    if (currentTarget != null)
+    {
+      currentTarget = null;
+      isMoving = !stats.isFriendly;
+      attackTimer = 0f;
+    }
+  }
 
   public void Init(Transform target)
   {
@@ -61,6 +74,27 @@ public abstract class BaseUnit : MonoBehaviour
       transform.localScale = originalScale;
       walkAnimTimer = 0f;
     }
+
+    if (currentTarget != null)
+    {
+      LookAtTarget();
+      attackTimer += Time.deltaTime;
+
+      if (Vector3.Distance(transform.position, currentTarget.transform.position) > attackRange)
+      {
+        currentTarget = null;
+        isMoving = true;
+        attackTimer = 0f;
+        return;
+      }
+
+      if (attackTimer >= attackCooldown)
+      {
+        currentTarget.TakeDamage(stats.damage);
+        attackTimer = 0f;
+      }
+    }
+
   }
 
   private void AnimateBounce()
@@ -100,8 +134,14 @@ public abstract class BaseUnit : MonoBehaviour
 
   protected virtual void Die()
   {
+    if (currentTarget != null)
+    {
+      currentTarget.OnTargetDeath();
+    }
+
     Destroy(gameObject);
   }
+
 
   public abstract void Move(Vector3 targetPosition);
 
@@ -120,4 +160,18 @@ public abstract class BaseUnit : MonoBehaviour
     isMoving = false;
   }
 
+  // Combat
+  public void EngageCombat(Transform target)
+  {
+    if (target == null || currentHealth <= 0) return;
+
+    isMoving = false;
+    currentTarget = target.GetComponent<BaseUnit>();
+    currentTarget.ReceiveAggro(this);
+  }
+  public virtual void ReceiveAggro(BaseUnit attacker)
+  {
+    isMoving = false;
+    currentTarget = attacker;
+  }
 }

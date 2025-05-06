@@ -8,5 +8,11 @@ public class AntUnit : BaseUnit
 
     Vector3 direction = (targetPosition - transform.position).normalized;
     transform.Translate(direction * stats.moveSpeed * Time.deltaTime, Space.World);
+
+    if (target && Vector3.Distance(transform.position, target.position) < attackRange)
+    {
+      EngageCombat(target);
+    }
+
   }
 }

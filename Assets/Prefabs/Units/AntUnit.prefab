@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3352868299795443938, guid: 379ad494083234f34971d85a7e70ecac, type: 3}
+      propertyPath: radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4920810941335101946, guid: 379ad494083234f34971d85a7e70ecac, type: 3}
       propertyPath: outlineColor.b
       value: 0
@@ -37013,6 +37017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: d83399d3340ae40b2ad30dbc90e36818, type: 2}
+  attackRange: 1
 --- !u!4 &9026674555145982609 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5593905900525932060, guid: 379ad494083234f34971d85a7e70ecac, type: 3}
