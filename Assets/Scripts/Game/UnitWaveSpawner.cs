@@ -39,6 +39,11 @@ public class UnitWaveSpawner : MonoBehaviour
         GameObject unit = Instantiate(unitPrefab, spawnPos, Quaternion.identity);
         BaseUnit baseUnit = unit.GetComponent<BaseUnit>();
 
+        if (baseUnit && !baseUnit.stats.isFriendly)
+        {
+          GameManager.Instance.RegisterEnemy();
+        }
+
         if (baseUnit != null && targetPoint != null)
           baseUnit.Init(targetPoint);
 

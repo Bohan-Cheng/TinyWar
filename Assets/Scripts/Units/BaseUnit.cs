@@ -144,6 +144,11 @@ public abstract class BaseUnit : MonoBehaviour
       currentTarget.OnTargetDeath();
     }
 
+    if (!stats.isFriendly)
+    {
+      GameManager.Instance?.OnEnemyDefeated(stats.value);
+    }
+
     Destroy(gameObject);
   }
 
