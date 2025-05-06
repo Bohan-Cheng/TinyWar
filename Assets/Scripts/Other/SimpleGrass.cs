@@ -21,8 +21,8 @@ public class SimpleGrass : MonoBehaviour
 
   void SetNewTarget()
   {
-    float x = Random.Range(-5f, 5f);
-    float z = Random.Range(-5f, 5f);
+    float x = Random.Range(-8f, 8f);
+    float z = Random.Range(-8f, 8f);
     targetRot = originalRot * Quaternion.Euler(x, 0, z);
     speed = Random.Range(0.5f, 1.5f);
   }
