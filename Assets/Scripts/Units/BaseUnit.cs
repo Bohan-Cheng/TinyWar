@@ -2,9 +2,10 @@ using UnityEngine;
 
 public abstract class BaseUnit : MonoBehaviour
 {
-  [SerializeField] protected UnitStatsConfig stats;
+  public UnitStatsConfig stats;
 
   protected float currentHealth;
+  protected bool isMoving = false;
   protected Transform target;
 
   private float walkAnimTimer = 0f;
@@ -19,26 +20,34 @@ public abstract class BaseUnit : MonoBehaviour
     originalScale = transform.localScale;
   }
 
+  public void SetToMove()
+  {
+    isMoving = true;
+  }
+
 
   public void Init(Transform target)
   {
     this.target = target;
     LookAtTarget();
+    if (!stats.isFriendly)
+    {
+      isMoving = true;
+    }
   }
 
   protected virtual void Update()
   {
-    if (target != null && !stats.isFriendly)
+    if (target != null && isMoving)
     {
       Move(target.position);
-      // Walking bounce effect
-      walkAnimTimer += Time.deltaTime * 10f; // Speed of bounce
-      float scaleY = 1f + Mathf.Sin(walkAnimTimer) * 0.05f; // 5% bounce
+
+      walkAnimTimer += Time.deltaTime * 10f;
+      float scaleY = 1f + Mathf.Sin(walkAnimTimer) * 0.05f;
       transform.localScale = new Vector3(originalScale.x, originalScale.y * scaleY, originalScale.z);
     }
     else
     {
-      // Reset scale when idle
       transform.localScale = originalScale;
       walkAnimTimer = 0f;
     }
@@ -50,7 +59,7 @@ public abstract class BaseUnit : MonoBehaviour
     if (target == null) return;
 
     Vector3 direction = target.position - transform.position;
-    direction.y = 0f; // Keep unit upright
+    direction.y = 0f;
     if (direction != Vector3.zero)
       transform.rotation = Quaternion.LookRotation(direction);
   }
