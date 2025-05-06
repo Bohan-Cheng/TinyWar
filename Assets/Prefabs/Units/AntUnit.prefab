@@ -37019,6 +37019,8 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: d83399d3340ae40b2ad30dbc90e36818, type: 2}
   currentHealth: 0
   attackRange: 1
+  animScale: 0.065
+  animSpeed: 20
   searchGridRadius: 0.5
 --- !u!4 &9026674555145982609 stripped
 Transform:

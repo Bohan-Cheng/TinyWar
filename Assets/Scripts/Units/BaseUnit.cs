@@ -17,6 +17,10 @@ public abstract class BaseUnit : MonoBehaviour
   private float walkAnimTimer = 0f;
   private Vector3 originalScale;
 
+  [Header("Animation Settings")]
+  [SerializeField] private float animScale = 0.065f;
+  [SerializeField] private float animSpeed = 10f;
+
 
   protected virtual void Awake()
   {
@@ -100,8 +104,8 @@ public abstract class BaseUnit : MonoBehaviour
 
   private void AnimateBounce()
   {
-    walkAnimTimer += Time.deltaTime * 10f;
-    float scaleY = 1f + Mathf.Sin(walkAnimTimer) * 0.05f;
+    walkAnimTimer += Time.deltaTime * animSpeed;
+    float scaleY = 1f + Mathf.Sin(walkAnimTimer) * animScale;
     transform.localScale = new Vector3(originalScale.x, originalScale.y * scaleY, originalScale.z);
   }
 
