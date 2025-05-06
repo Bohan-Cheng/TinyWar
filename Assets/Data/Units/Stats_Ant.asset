@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Ant
   isFriendly: 1
-  moveSpeed: 0.4
+  moveSpeed: 1
   maxHealth: 3
   damage: 1
   value: 0

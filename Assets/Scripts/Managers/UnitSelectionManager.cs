@@ -5,6 +5,7 @@ public class SelectionManager : MonoBehaviour
   private BaseUnit selectedUnit;
 
   [SerializeField] private LayerMask unitLayerMask;
+  [SerializeField] private LayerMask groundLayerMask;
 
   void Update()
   {
@@ -17,6 +18,7 @@ public class SelectionManager : MonoBehaviour
   void HandleLeftClick()
   {
     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
     if (Physics.Raycast(ray, out RaycastHit hit, 100f, unitLayerMask))
     {
       BaseUnit clickedUnit = hit.collider.GetComponent<BaseUnit>();
@@ -34,7 +36,16 @@ public class SelectionManager : MonoBehaviour
           selectedUnit.SetToMove();
           Debug.Log($"Commanded {selectedUnit.name} to attack {clickedUnit.name}");
         }
+
+        return;
       }
+    }
+
+    if (selectedUnit != null && Physics.Raycast(ray, out RaycastHit groundHit, 100f, groundLayerMask))
+    {
+      selectedUnit.ClearTarget();
+      selectedUnit.MoveToPosition(groundHit.point);
+      Debug.Log($"Commanded {selectedUnit.name} to move to {groundHit.point}");
     }
   }
 }

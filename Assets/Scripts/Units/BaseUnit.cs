@@ -7,6 +7,8 @@ public abstract class BaseUnit : MonoBehaviour
   protected float currentHealth;
   protected bool isMoving = false;
   protected Transform target;
+  protected Vector3? moveToPosition = null;
+
 
   private float walkAnimTimer = 0f;
   private Vector3 originalScale;
@@ -41,10 +43,18 @@ public abstract class BaseUnit : MonoBehaviour
     if (target != null && isMoving)
     {
       Move(target.position);
+      AnimateBounce();
+    }
+    else if (moveToPosition.HasValue && isMoving)
+    {
+      Move(moveToPosition.Value);
+      AnimateBounce();
 
-      walkAnimTimer += Time.deltaTime * 10f;
-      float scaleY = 1f + Mathf.Sin(walkAnimTimer) * 0.05f;
-      transform.localScale = new Vector3(originalScale.x, originalScale.y * scaleY, originalScale.z);
+      if (Vector3.Distance(transform.position, moveToPosition.Value) < 0.1f)
+      {
+        moveToPosition = null;
+        isMoving = false;
+      }
     }
     else
     {
@@ -53,6 +63,12 @@ public abstract class BaseUnit : MonoBehaviour
     }
   }
 
+  private void AnimateBounce()
+  {
+    walkAnimTimer += Time.deltaTime * 10f;
+    float scaleY = 1f + Mathf.Sin(walkAnimTimer) * 0.05f;
+    transform.localScale = new Vector3(originalScale.x, originalScale.y * scaleY, originalScale.z);
+  }
 
   public void LookAtTarget()
   {
@@ -63,6 +79,15 @@ public abstract class BaseUnit : MonoBehaviour
     if (direction != Vector3.zero)
       transform.rotation = Quaternion.LookRotation(direction);
   }
+
+  public void LookAtPosition(Vector3 position)
+  {
+    Vector3 direction = position - transform.position;
+    direction.y = 0f;
+    if (direction != Vector3.zero)
+      transform.rotation = Quaternion.LookRotation(direction);
+  }
+
 
   public virtual void TakeDamage(float amount)
   {
@@ -79,4 +104,20 @@ public abstract class BaseUnit : MonoBehaviour
   }
 
   public abstract void Move(Vector3 targetPosition);
+
+  public void MoveToPosition(Vector3 position)
+  {
+    LookAtPosition(position);
+    moveToPosition = position;
+    isMoving = true;
+    target = null;
+  }
+
+  public void ClearTarget()
+  {
+    target = null;
+    moveToPosition = null;
+    isMoving = false;
+  }
+
 }
