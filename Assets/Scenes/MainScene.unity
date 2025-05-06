@@ -657,8 +657,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e029820beff34177ae812719b833c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellSize: 4
-  gridDimensions: {x: 10, y: 10}
+  cellSize: 2
+  gridDimensions: {x: 20, y: 20}
   visualizeGrid: 1
 --- !u!4 &342894116
 Transform:

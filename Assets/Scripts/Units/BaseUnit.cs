@@ -4,14 +4,14 @@ public abstract class BaseUnit : MonoBehaviour
 {
   public UnitStatsConfig stats;
 
-  protected float currentHealth;
+  public float currentHealth;
   protected bool isMoving = false;
   protected Transform target;
   protected Vector3? moveToPosition = null;
 
   protected BaseUnit currentTarget;
   protected float attackCooldown = 1.0f;
-  private float attackTimer = 0f;
+  protected float attackTimer = 0f;
   public float attackRange = 1f;
 
   private float walkAnimTimer = 0f;
@@ -44,6 +44,7 @@ public abstract class BaseUnit : MonoBehaviour
   public void Init(Transform target)
   {
     this.target = target;
+    moveToPosition = null;
     LookAtTarget();
     if (!stats.isFriendly)
     {
