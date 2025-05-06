@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Stats_Ant
   m_EditorClassIdentifier: 
   unitName: Ant
+  isFriendly: 1
   moveSpeed: 10
   maxHealth: 3
   damage: 1
+  value: 0
+  flagRisk: 0
   unitType: 0

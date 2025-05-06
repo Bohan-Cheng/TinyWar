@@ -4,6 +4,7 @@ using UnityEngine;
 public class UnitStatsConfig : ScriptableObject
 {
   public string unitName;
+  public bool isFriendly;
   public float moveSpeed;
   public float maxHealth;
   public float damage;
