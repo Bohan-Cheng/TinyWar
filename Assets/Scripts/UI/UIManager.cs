@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -16,6 +17,11 @@ public class UIManager : MonoBehaviour
   [SerializeField] private Button resumeButton;
   [SerializeField] private Button exitButton;
   [SerializeField] private TMP_Text scoreText;
+  [SerializeField] private GameObject winScreen;
+  [SerializeField] private GameObject loseScreen;
+  [SerializeField] private Button playAgainButtonWin;
+  [SerializeField] private Button playAgainButtonLose;
+
 
   private bool isPaused = false;
   private bool isAIControlled = false;
@@ -28,9 +34,14 @@ public class UIManager : MonoBehaviour
     toggleMusicButton.onClick.AddListener(ToggleMusic);
     resumeButton.onClick.AddListener(ResumeGame);
     exitButton.onClick.AddListener(ExitGame);
+    playAgainButtonWin.onClick.AddListener(ReloadScene);
+    playAgainButtonLose.onClick.AddListener(ReloadScene);
+
 
     menuPanel.SetActive(false);
     menuButton.gameObject.SetActive(true);
+
+    UpdateScore(0);
   }
 
   private void OnEnable()
@@ -49,6 +60,12 @@ public class UIManager : MonoBehaviour
     {
       playerInput.actions["Pause"].performed -= OnPauseInput;
     }
+  }
+
+  public void ReloadScene()
+  {
+    Time.timeScale = 1f; // Unpause before reload
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
   }
 
   private void OnPauseInput(InputAction.CallbackContext context)
@@ -73,6 +90,22 @@ public class UIManager : MonoBehaviour
     Time.timeScale = 1f;
     menuPanel.SetActive(false);
     menuButton.gameObject.SetActive(true);
+  }
+
+  public void ShowWinScreen()
+  {
+    Time.timeScale = 0f;
+    winScreen.SetActive(true);
+    menuPanel.SetActive(false);
+    menuButton.gameObject.SetActive(false);
+  }
+
+  public void ShowLoseScreen()
+  {
+    Time.timeScale = 0f;
+    loseScreen.SetActive(true);
+    menuPanel.SetActive(false);
+    menuButton.gameObject.SetActive(false);
   }
 
   public void ToggleControlMode()
