@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Stats_Ladybug
   m_EditorClassIdentifier: 
   unitName: Ladybug
-  moveSpeed: 8
+  isFriendly: 0
+  moveSpeed: 0.32
   maxHealth: 2
   damage: 1
   value: 100

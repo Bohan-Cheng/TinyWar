@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Stats_Beetle
   m_EditorClassIdentifier: 
   unitName: Beetle
-  moveSpeed: 6
+  isFriendly: 0
+  moveSpeed: 0.24
   maxHealth: 6
   damage: 2
   value: 150
