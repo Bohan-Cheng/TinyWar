@@ -16,4 +16,6 @@ MonoBehaviour:
   moveSpeed: 6
   maxHealth: 6
   damage: 2
+  value: 150
+  flagRisk: 3
   unitType: 3

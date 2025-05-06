@@ -7,6 +7,8 @@ public class UnitStatsConfig : ScriptableObject
   public float moveSpeed;
   public float maxHealth;
   public float damage;
+  public int value;
+  public int flagRisk;
   public UnitType unitType; // Enum to identify unit kind
 }
 
