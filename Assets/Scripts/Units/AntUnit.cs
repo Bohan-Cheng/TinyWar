@@ -13,20 +13,20 @@ public class AntUnit : BaseUnit
   {
     if (stats == null) return;
 
-    float distance = Vector3.Distance(transform.position, targetPosition);
+    Vector3 direction = targetPosition - transform.position;
+    float distance = direction.magnitude;
 
     if (distance > 0.1f)
     {
-      Vector3 direction = (targetPosition - transform.position).normalized;
-      transform.Translate(direction * stats.moveSpeed * Time.deltaTime, Space.World);
+      transform.Translate(direction.normalized * stats.moveSpeed * Time.deltaTime, Space.World);
     }
 
+    // Initiate combat when in range of target
     if (target && Vector3.Distance(transform.position, target.position) < attackRange)
     {
       EngageCombat(target);
     }
   }
-
 
   protected override void OnMove()
   {
@@ -36,9 +36,7 @@ public class AntUnit : BaseUnit
     indicator.ClearIndicators();
 
     if (target)
-    {
       indicator.StartTarget(target);
-    }
   }
 
   protected override void OnStop()
@@ -50,16 +48,13 @@ public class AntUnit : BaseUnit
   public override void OnTargetDeath()
   {
     base.OnTargetDeath();
-
     indicator.ClearIndicators();
   }
-
 
   public void OnSelect()
   {
     indicator.StartSelect();
   }
-
 
   protected override void Awake()
   {
@@ -71,12 +66,13 @@ public class AntUnit : BaseUnit
   {
     base.Update();
 
+    // Clear visual indicator if target is out of range
     if (currentTarget && Vector3.Distance(transform.position, currentTarget.transform.position) > attackRange)
     {
       indicator.ClearIndicators();
     }
 
-
+    // ant idle and look for nearby enemies
     if (stats.isFriendly && !IsBusy())
     {
       BaseUnit nextTarget = FindClosestEnemy();
@@ -87,7 +83,6 @@ public class AntUnit : BaseUnit
       }
     }
   }
-
 
   private BaseUnit FindClosestEnemy()
   {
@@ -109,10 +104,11 @@ public class AntUnit : BaseUnit
       }
     }
 
-    if (GameManager.Instance.isAIMode)
+    // If no enemies found and in AI mode, return to original position of the ant
+    if (GameManager.Instance.isAIMode && closest == null)
     {
-      // No enemies found — return to original position
-      if (closest == null && Vector3.Distance(transform.position, originalPosition) > 0.1f)
+      float returnDist = (transform.position - originalPosition).sqrMagnitude;
+      if (returnDist > 0.01f)
       {
         MoveToPosition(originalPosition);
       }
@@ -120,7 +116,4 @@ public class AntUnit : BaseUnit
 
     return closest;
   }
-
-
-
 }

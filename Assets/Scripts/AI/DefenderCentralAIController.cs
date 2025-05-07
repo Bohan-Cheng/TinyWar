@@ -34,12 +34,14 @@ public class DefenderCentralAIController : MonoBehaviour
 
   private void EvaluateThreatsAndAssignDefenders()
   {
+    // Get nearby enemy units within detection radius using grid system
     List<BaseUnit> enemies = GridManager.UnitGrid.GetNearby(flagPosition.position, detectionRadius)
         .Where(u => u != null && !u.stats.isFriendly && u.currentHealth > 0)
         .ToList();
 
     if (enemies.Count == 0) return;
 
+    // Sort enemies by descending threat level
     enemies.Sort((a, b) => ThreatScore(b).CompareTo(ThreatScore(a)));
 
     HashSet<BaseUnit> assignedDefenders = new HashSet<BaseUnit>();
@@ -48,10 +50,12 @@ public class DefenderCentralAIController : MonoBehaviour
     {
       if (enemy == null || enemy.currentHealth <= 0) continue;
 
-      int defendersNeeded = Mathf.CeilToInt(enemy.currentHealth / 2f); // 1 ant per 2 HP
-
+      // Determine required defenders (1 per 2 HP of enemy)
+      // To distribute units by portion based on enemy health
+      int defendersNeeded = Mathf.CeilToInt(enemy.currentHealth / 2f);
       int assigned = 0;
 
+      // Set to target filtered enemy
       foreach (BaseUnit ant in allDefenders)
       {
         if (assigned >= defendersNeeded) break;
@@ -65,7 +69,7 @@ public class DefenderCentralAIController : MonoBehaviour
     }
   }
 
-
+  // Calculates a composite threat score for prioritizing targets
   private float ThreatScore(BaseUnit enemy)
   {
     float distanceToFlag = Vector3.Distance(enemy.transform.position, flagPosition.position);

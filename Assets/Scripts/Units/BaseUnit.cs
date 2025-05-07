@@ -22,10 +22,8 @@ public abstract class BaseUnit : MonoBehaviour
   [SerializeField] private float animScale = 0.065f;
   [SerializeField] private float animSpeed = 10f;
 
-  public bool IsBusy()
-  {
-    return isMoving || currentTarget != null;
-  }
+  // Indicates whether the unit is currently busy with movement but not combat
+  public bool IsBusy() => isMoving || currentTarget != null;
 
   protected virtual void Awake()
   {
@@ -35,50 +33,50 @@ public abstract class BaseUnit : MonoBehaviour
     originalScale = transform.localScale;
   }
 
-  public void SetToMove()
-  {
-    isMoving = true;
-  }
+  public void SetToMove() => isMoving = true;
 
   public virtual void OnTargetDeath()
   {
-    if (currentTarget != null)
-    {
-      currentTarget = null;
-      isMoving = !stats.isFriendly;
-      attackTimer = 0f;
-      isCombating = false;
-    }
+    currentTarget = null;
+    isMoving = !stats.isFriendly;
+    isCombating = false;
+    attackTimer = 0f;
   }
 
   public void Init(Transform target)
   {
     this.target = target;
     moveToPosition = null;
+
     if (!isMoving)
-    {
       OnMove();
-    }
+
     LookAtTarget();
+
     if (!stats.isFriendly)
-    {
       isMoving = true;
-    }
   }
 
   protected virtual void Update()
   {
-    if (target != null && isMoving)
+    HandleMovement();
+    HandleCombat();
+  }
+
+  // Handles movement logic toward a target or position
+  private void HandleMovement()
+  {
+    if (isMoving)
     {
-      Move(target.position);
-      AnimateBounce();
-    }
-    else if (moveToPosition.HasValue && isMoving)
-    {
-      Move(moveToPosition.Value);
+      if (target != null)
+        Move(target.position);
+      else if (moveToPosition.HasValue)
+        Move(moveToPosition.Value);
+
       AnimateBounce();
 
-      if (Vector3.Distance(transform.position, moveToPosition.Value) < 0.1f)
+      // Stop if close enough to the destination
+      if (moveToPosition.HasValue && Vector3.Distance(transform.position, moveToPosition.Value) < 0.1f)
       {
         moveToPosition = null;
         isMoving = false;
@@ -87,32 +85,37 @@ public abstract class BaseUnit : MonoBehaviour
     }
     else
     {
+      // When no target or position set, stop moving
       isMoving = false;
       OnStop();
       transform.localScale = originalScale;
       walkAnimTimer = 0f;
     }
+  }
 
-    if (currentTarget != null)
+  // Handles attacking logic if a target is assigned
+  private void HandleCombat()
+  {
+    if (currentTarget == null) return;
+
+    LookAtTarget();
+    attackTimer += Time.deltaTime;
+
+    // Stop if target out of range
+    if (Vector3.Distance(transform.position, currentTarget.transform.position) > attackRange)
     {
-      LookAtTarget();
-      attackTimer += Time.deltaTime;
-
-      if (Vector3.Distance(transform.position, currentTarget.transform.position) > attackRange)
-      {
-        currentTarget = null;
-        isMoving = true;
-        attackTimer = 0f;
-        return;
-      }
-
-      if (attackTimer >= attackCooldown)
-      {
-        currentTarget.TakeDamage(stats.damage);
-        attackTimer = 0f;
-      }
+      currentTarget = null;
+      isMoving = true;
+      attackTimer = 0f;
+      return;
     }
 
+    // Apply damage if cooldown is ready
+    if (attackTimer >= attackCooldown)
+    {
+      currentTarget.TakeDamage(stats.damage);
+      attackTimer = 0f;
+    }
   }
 
   private void AnimateBounce()
@@ -124,12 +127,8 @@ public abstract class BaseUnit : MonoBehaviour
 
   public void LookAtTarget()
   {
-    if (target == null) return;
-
-    Vector3 direction = target.position - transform.position;
-    direction.y = 0f;
-    if (direction != Vector3.zero)
-      transform.rotation = Quaternion.LookRotation(direction);
+    if (target != null)
+      LookAtPosition(target.position);
   }
 
   public void LookAtPosition(Vector3 position)
@@ -140,31 +139,24 @@ public abstract class BaseUnit : MonoBehaviour
       transform.rotation = Quaternion.LookRotation(direction);
   }
 
-
   public virtual void TakeDamage(float amount)
   {
     currentHealth -= amount;
     if (currentHealth <= 0)
-    {
       Die();
-    }
   }
 
   protected virtual void Die()
   {
-    if (currentTarget != null)
-    {
-      currentTarget.OnTargetDeath();
-    }
+    currentTarget?.OnTargetDeath();
 
     if (!stats.isFriendly)
-    {
       GameManager.Instance?.OnEnemyDefeated(stats.value);
-    }
 
     Destroy(gameObject);
   }
 
+  // Stop movement manually
   public virtual void Stop()
   {
     isMoving = false;
@@ -182,10 +174,10 @@ public abstract class BaseUnit : MonoBehaviour
   {
     LookAtPosition(position);
     moveToPosition = position;
+
     if (!isMoving)
-    {
       OnMove();
-    }
+
     isMoving = true;
     target = null;
     isCombating = false;
@@ -199,31 +191,24 @@ public abstract class BaseUnit : MonoBehaviour
     isCombating = false;
   }
 
-  // Combat
   public void EngageCombat(Transform target)
   {
     if (target == null || currentHealth <= 0) return;
 
     isCombating = true;
-
     isMoving = false;
+
     currentTarget = target.GetComponent<BaseUnit>();
-    currentTarget.ReceiveAggro(this);
+    currentTarget?.ReceiveAggro(this);
   }
+
   public virtual void ReceiveAggro(BaseUnit attacker)
   {
     isMoving = false;
     currentTarget = attacker;
   }
 
-  protected virtual void OnMove()
-  {
-
-  }
-
-  protected virtual void OnStop()
-  {
-
-  }
-
+  // Used by ants right now for indication display
+  protected virtual void OnMove() { }
+  protected virtual void OnStop() { }
 }
