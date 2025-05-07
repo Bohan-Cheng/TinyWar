@@ -4,6 +4,8 @@ using UnityEngine;
 public class AntUnit : BaseUnit
 {
   [SerializeField] private float searchGridRadius = 0.5f;
+  [SerializeField] private AudioSource walkingAudio;
+  [SerializeField] private SelectionIndicator indicator;
 
   private Vector3 originalPosition;
 
@@ -11,14 +13,53 @@ public class AntUnit : BaseUnit
   {
     if (stats == null) return;
 
-    Vector3 direction = (targetPosition - transform.position).normalized;
-    transform.Translate(direction * stats.moveSpeed * Time.deltaTime, Space.World);
+    float distance = Vector3.Distance(transform.position, targetPosition);
+
+    if (distance > 0.1f)
+    {
+      Vector3 direction = (targetPosition - transform.position).normalized;
+      transform.Translate(direction * stats.moveSpeed * Time.deltaTime, Space.World);
+    }
 
     if (target && Vector3.Distance(transform.position, target.position) < attackRange)
     {
       EngageCombat(target);
     }
   }
+
+
+  protected override void OnMove()
+  {
+    if (!walkingAudio.isPlaying)
+      walkingAudio.Play();
+
+    indicator.ClearIndicators();
+
+    if (target)
+    {
+      indicator.StartTarget(target);
+    }
+  }
+
+  protected override void OnStop()
+  {
+    if (walkingAudio.isPlaying)
+      walkingAudio.Stop();
+  }
+
+  public override void OnTargetDeath()
+  {
+    base.OnTargetDeath();
+
+    indicator.ClearIndicators();
+  }
+
+
+  public void OnSelect()
+  {
+    indicator.StartSelect();
+  }
+
 
   protected override void Awake()
   {
@@ -29,6 +70,12 @@ public class AntUnit : BaseUnit
   protected override void Update()
   {
     base.Update();
+
+    if (currentTarget && Vector3.Distance(transform.position, currentTarget.transform.position) > attackRange)
+    {
+      indicator.ClearIndicators();
+    }
+
 
     if (stats.isFriendly && !IsBusy())
     {

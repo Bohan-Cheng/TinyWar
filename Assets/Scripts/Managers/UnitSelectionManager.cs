@@ -6,6 +6,12 @@ public class SelectionManager : MonoBehaviour
 
   [SerializeField] private LayerMask unitLayerMask;
   [SerializeField] private LayerMask groundLayerMask;
+  [SerializeField] private AudioSource selectionAudio;
+  [SerializeField] private AudioClip selectionClip;
+  [SerializeField] private AudioClip onActionClip;
+  [SerializeField] private float audioCooldown = 0.3f;
+
+  private float nextAudioTime = 0f;
 
   void Update()
   {
@@ -27,14 +33,20 @@ public class SelectionManager : MonoBehaviour
       {
         if (clickedUnit.stats.isFriendly)
         {
+          PlaySound(selectionClip, 0.35f);
           selectedUnit = clickedUnit;
-          //Debug.Log($"Selected unit: {selectedUnit.name}");
+          selectedUnit.Stop();
+          AntUnit ant = (AntUnit)selectedUnit;
+          if (ant)
+          {
+            ant.OnSelect();
+          }
         }
         else if (selectedUnit != null && !clickedUnit.stats.isFriendly)
         {
+          PlaySound(onActionClip, 1.0f);
           selectedUnit.Init(clickedUnit.transform);
           selectedUnit.SetToMove();
-          //Debug.Log($"Commanded {selectedUnit.name} to attack {clickedUnit.name}");
         }
 
         return;
@@ -45,7 +57,18 @@ public class SelectionManager : MonoBehaviour
     {
       selectedUnit.ClearTarget();
       selectedUnit.MoveToPosition(groundHit.point);
-      //Debug.Log($"Commanded {selectedUnit.name} to move to {groundHit.point}");
+    }
+
+    PlaySound(onActionClip, 1.0f);
+  }
+
+  void PlaySound(AudioClip clip, float volume)
+  {
+    if (Time.time >= nextAudioTime)
+    {
+      selectionAudio.volume = volume;
+      selectionAudio.PlayOneShot(clip);
+      nextAudioTime = Time.time + audioCooldown;
     }
   }
 }

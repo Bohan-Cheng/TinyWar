@@ -55,7 +55,7 @@ public class DefenderCentralAIController : MonoBehaviour
       foreach (BaseUnit ant in allDefenders)
       {
         if (assigned >= defendersNeeded) break;
-        if (ant == null || ant.currentHealth <= 0 || assignedDefenders.Contains(ant)) continue;
+        if (ant == null || ant.currentHealth <= 0 || assignedDefenders.Contains(ant) || ant.isCombating) continue;
 
         ant.Init(enemy.transform);
         ant.SetToMove();

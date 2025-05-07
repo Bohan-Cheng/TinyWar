@@ -6,6 +6,7 @@ public abstract class BaseUnit : MonoBehaviour
 
   public float currentHealth;
   protected bool isMoving = false;
+  public bool isCombating = false;
   protected Transform target;
   protected Vector3? moveToPosition = null;
 
@@ -46,6 +47,7 @@ public abstract class BaseUnit : MonoBehaviour
       currentTarget = null;
       isMoving = !stats.isFriendly;
       attackTimer = 0f;
+      isCombating = false;
     }
   }
 
@@ -53,6 +55,10 @@ public abstract class BaseUnit : MonoBehaviour
   {
     this.target = target;
     moveToPosition = null;
+    if (!isMoving)
+    {
+      OnMove();
+    }
     LookAtTarget();
     if (!stats.isFriendly)
     {
@@ -76,11 +82,13 @@ public abstract class BaseUnit : MonoBehaviour
       {
         moveToPosition = null;
         isMoving = false;
+        OnStop();
       }
     }
     else
     {
       isMoving = false;
+      OnStop();
       transform.localScale = originalScale;
       walkAnimTimer = 0f;
     }
@@ -157,6 +165,16 @@ public abstract class BaseUnit : MonoBehaviour
     Destroy(gameObject);
   }
 
+  public virtual void Stop()
+  {
+    isMoving = false;
+    target = null;
+    moveToPosition = null;
+    isCombating = false;
+    attackTimer = 0f;
+
+    OnStop();
+  }
 
   public abstract void Move(Vector3 targetPosition);
 
@@ -164,8 +182,13 @@ public abstract class BaseUnit : MonoBehaviour
   {
     LookAtPosition(position);
     moveToPosition = position;
+    if (!isMoving)
+    {
+      OnMove();
+    }
     isMoving = true;
     target = null;
+    isCombating = false;
   }
 
   public void ClearTarget()
@@ -173,12 +196,15 @@ public abstract class BaseUnit : MonoBehaviour
     target = null;
     moveToPosition = null;
     isMoving = false;
+    isCombating = false;
   }
 
   // Combat
   public void EngageCombat(Transform target)
   {
     if (target == null || currentHealth <= 0) return;
+
+    isCombating = true;
 
     isMoving = false;
     currentTarget = target.GetComponent<BaseUnit>();
@@ -189,4 +215,15 @@ public abstract class BaseUnit : MonoBehaviour
     isMoving = false;
     currentTarget = attacker;
   }
+
+  protected virtual void OnMove()
+  {
+
+  }
+
+  protected virtual void OnStop()
+  {
+
+  }
+
 }
