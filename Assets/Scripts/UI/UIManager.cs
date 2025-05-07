@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
   [Header("Refs")]
   [SerializeField] private GameObject menuPanel;
   [SerializeField] private Button menuButton;
+  [SerializeField] private Button gridVisButton;
   [SerializeField] private Button toggleModeButton;
   [SerializeField] private TMP_Text modeButtonText;
   [SerializeField] private Button toggleMusicButton;
@@ -20,7 +21,7 @@ public class UIManager : MonoBehaviour
   [SerializeField] private GameObject loseScreen;
   [SerializeField] private Button playAgainButtonWin;
   [SerializeField] private Button playAgainButtonLose;
-
+  [SerializeField] private GridVisualizer gridVisualizer;
 
   private bool isPaused = false;
   private bool isAIControlled = false;
@@ -35,6 +36,7 @@ public class UIManager : MonoBehaviour
     exitButton.onClick.AddListener(ExitGame);
     playAgainButtonWin.onClick.AddListener(ReloadScene);
     playAgainButtonLose.onClick.AddListener(ReloadScene);
+    gridVisButton.onClick.AddListener(ToggleDebug);
 
 
     menuPanel.SetActive(false);
@@ -114,6 +116,11 @@ public class UIManager : MonoBehaviour
     GameManager.Instance.isAIMode = isAIControlled;
 
     modeButtonText.text = isAIControlled ? "Start Player Mode" : "Start AI Mode";
+  }
+
+  public void ToggleDebug()
+  {
+    gridVisualizer.ToggleVisualization(!gridVisualizer.IsVisible());
   }
 
   public void ToggleMusic()

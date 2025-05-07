@@ -11,6 +11,11 @@ public class Grid<TCell>
     this.cellSize = cellSize;
   }
 
+  public Dictionary<Vector2Int, List<TCell>> GetAllCellsWithUnits()
+  {
+    return grid;
+  }
+
   private Vector2Int GetCellCoords(Vector3 worldPosition)
   {
     return new Vector2Int(
