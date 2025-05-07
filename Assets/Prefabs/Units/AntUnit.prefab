@@ -37021,7 +37021,7 @@ MonoBehaviour:
   attackRange: 1
   animScale: 0.065
   animSpeed: 20
-  searchGridRadius: 0.5
+  searchGridRadius: 0.25
 --- !u!4 &9026674555145982609 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5593905900525932060, guid: 379ad494083234f34971d85a7e70ecac, type: 3}

@@ -110,7 +110,8 @@ public class UIManager : MonoBehaviour
   public void ToggleControlMode()
   {
     isAIControlled = !isAIControlled;
-    Debug.Log("Mode switched to: " + (isAIControlled ? "AI" : "Player"));
+
+    GameManager.Instance.isAIMode = isAIControlled;
 
     modeButtonText.text = isAIControlled ? "Start Player Mode" : "Start AI Mode";
   }
@@ -118,7 +119,6 @@ public class UIManager : MonoBehaviour
   public void ToggleMusic()
   {
     isMusicOn = !isMusicOn;
-    Debug.Log("Music " + (isMusicOn ? "On" : "Off"));
 
     AudioListener.volume = isMusicOn ? 1f : 0f;
 

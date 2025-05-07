@@ -232,6 +232,8 @@ MonoBehaviour:
   spawnGap: 0.5
   targetPoint: {fileID: 357036052}
   autoSpawnOnStart: 1
+  isDefender: 0
+  defenderCAC: {fileID: 0}
 --- !u!4 &126052508
 Transform:
   m_ObjectHideFlags: 0
@@ -298,6 +300,8 @@ MonoBehaviour:
   spawnGap: 0.5
   targetPoint: {fileID: 357036052}
   autoSpawnOnStart: 1
+  isDefender: 0
+  defenderCAC: {fileID: 0}
 --- !u!4 &203124549
 Transform:
   m_ObjectHideFlags: 0
@@ -307,7 +311,7 @@ Transform:
   m_GameObject: {fileID: 203124546}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.81, y: 0, z: -0.09}
+  m_LocalPosition: {x: -19.44, y: 0, z: -0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1753,7 +1757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe62193ff8aa94cee90dc966bf458c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 4
+  radius: 6
   color: {r: 0, g: 0.1782589, b: 1, a: 1}
 --- !u!114 &681446318
 MonoBehaviour:
@@ -1769,11 +1773,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 5404577902482729798, guid: 5cc546c1ab8f2409aa10fa10f889b7dc, type: 3}
   unitCount: 2
-  spawnRadius: 4
+  spawnRadius: 6
   dontSpawnRadius: 0
   spawnGap: 1.5
   targetPoint: {fileID: 357036052}
   autoSpawnOnStart: 1
+  isDefender: 0
+  defenderCAC: {fileID: 0}
 --- !u!4 &681446319
 Transform:
   m_ObjectHideFlags: 0
@@ -1783,7 +1789,7 @@ Transform:
   m_GameObject: {fileID: 681446316}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.42, y: 0, z: 15.74}
+  m_LocalPosition: {x: 13.6, y: 0, z: 9.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1834,7 +1840,9 @@ Transform:
   - {fileID: 1305465987}
   - {fileID: 681446319}
   - {fileID: 1218896590}
+  - {fileID: 2141904283}
   - {fileID: 203124549}
+  - {fileID: 972289192}
   - {fileID: 1282686532}
   - {fileID: 126052508}
   - {fileID: 257168864}
@@ -2516,6 +2524,74 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948829208}
   m_CullTransparentMesh: 1
+--- !u!1 &972289191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 972289192}
+  - component: {fileID: 972289194}
+  - component: {fileID: 972289193}
+  m_Layer: 0
+  m_Name: AphidSpawner (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &972289192
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972289191}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -10.65, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 778197732}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &972289193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972289191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe62193ff8aa94cee90dc966bf458c82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 2
+  color: {r: 0.022278232, g: 0.7264151, b: 0, a: 1}
+--- !u!114 &972289194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972289191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13899d264f3d34388a70982e51c1abeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitPrefab: {fileID: 5404577902482729798, guid: 37231db520e18417a9934a7a8c5eacf7, type: 3}
+  unitCount: 2
+  spawnRadius: 2
+  dontSpawnRadius: 0
+  spawnGap: 0.5
+  targetPoint: {fileID: 357036052}
+  autoSpawnOnStart: 1
+  isDefender: 0
+  defenderCAC: {fileID: 0}
 --- !u!1 &976835158
 GameObject:
   m_ObjectHideFlags: 0
@@ -3290,6 +3366,8 @@ MonoBehaviour:
   spawnGap: 1.5
   targetPoint: {fileID: 357036052}
   autoSpawnOnStart: 1
+  isDefender: 0
+  defenderCAC: {fileID: 0}
 --- !u!4 &1218896590
 Transform:
   m_ObjectHideFlags: 0
@@ -3299,7 +3377,7 @@ Transform:
   m_GameObject: {fileID: 1218896587}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.68, y: 0, z: 18.03}
+  m_LocalPosition: {x: -13.6, y: 0, z: 19.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3429,6 +3507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2740ba6f84a3f441d808edbe7ee2f5d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAIMode: 0
   uiManager: {fileID: 2082632126}
 --- !u!1 &1282686529
 GameObject:
@@ -3481,6 +3560,8 @@ MonoBehaviour:
   spawnGap: 0.5
   targetPoint: {fileID: 357036052}
   autoSpawnOnStart: 1
+  isDefender: 0
+  defenderCAC: {fileID: 0}
 --- !u!4 &1282686532
 Transform:
   m_ObjectHideFlags: 0
@@ -3556,12 +3637,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 5404577902482729798, guid: 63acb48e8d59f43f595871fd8d5b806f, type: 3}
-  unitCount: 6
+  unitCount: 8
   spawnRadius: 3
   dontSpawnRadius: 2
   spawnGap: 1.5
   targetPoint: {fileID: 357036052}
   autoSpawnOnStart: 1
+  isDefender: 1
+  defenderCAC: {fileID: 1847845481}
 --- !u!1 &1322087785
 GameObject:
   m_ObjectHideFlags: 0
@@ -4888,6 +4971,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1803298651}
   m_CullTransparentMesh: 1
+--- !u!1 &1847845479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1847845480}
+  - component: {fileID: 1847845481}
+  m_Layer: 0
+  m_Name: DefenderCentralAIController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1847845480
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847845479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20, y: 0, z: 20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1847845481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847845479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42780034ce74b41abbc4e40133ceba16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRadius: 7
+  flagPosition: {fileID: 357036052}
+  decisionInterval: 1
 --- !u!1001 &1893487879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5588,6 +5718,74 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2141904282
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2141904283}
+  - component: {fileID: 2141904285}
+  - component: {fileID: 2141904284}
+  m_Layer: 0
+  m_Name: LadybugSpawner (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2141904283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141904282}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.3, y: 0, z: 5.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 778197732}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2141904284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141904282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe62193ff8aa94cee90dc966bf458c82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 2
+  color: {r: 1, g: 0.7678807, b: 0, a: 1}
+--- !u!114 &2141904285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141904282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13899d264f3d34388a70982e51c1abeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitPrefab: {fileID: 5404577902482729798, guid: d490b2547abcf4876a439e5900b488f9, type: 3}
+  unitCount: 1
+  spawnRadius: 2
+  dontSpawnRadius: 0
+  spawnGap: 1.5
+  targetPoint: {fileID: 357036052}
+  autoSpawnOnStart: 1
+  isDefender: 0
+  defenderCAC: {fileID: 0}
 --- !u!1001 &2926557734824742492
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5716,3 +5914,4 @@ SceneRoots:
   - {fileID: 2048513695}
   - {fileID: 2082632127}
   - {fileID: 1246792572}
+  - {fileID: 1847845480}

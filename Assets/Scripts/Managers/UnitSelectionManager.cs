@@ -28,13 +28,13 @@ public class SelectionManager : MonoBehaviour
         if (clickedUnit.stats.isFriendly)
         {
           selectedUnit = clickedUnit;
-          Debug.Log($"Selected unit: {selectedUnit.name}");
+          //Debug.Log($"Selected unit: {selectedUnit.name}");
         }
         else if (selectedUnit != null && !clickedUnit.stats.isFriendly)
         {
           selectedUnit.Init(clickedUnit.transform);
           selectedUnit.SetToMove();
-          Debug.Log($"Commanded {selectedUnit.name} to attack {clickedUnit.name}");
+          //Debug.Log($"Commanded {selectedUnit.name} to attack {clickedUnit.name}");
         }
 
         return;
@@ -45,7 +45,7 @@ public class SelectionManager : MonoBehaviour
     {
       selectedUnit.ClearTarget();
       selectedUnit.MoveToPosition(groundHit.point);
-      Debug.Log($"Commanded {selectedUnit.name} to move to {groundHit.point}");
+      //Debug.Log($"Commanded {selectedUnit.name} to move to {groundHit.point}");
     }
   }
 }

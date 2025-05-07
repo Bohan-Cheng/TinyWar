@@ -4,6 +4,8 @@ public class GameManager : MonoBehaviour
 {
   public static GameManager Instance { get; private set; }
 
+  public bool isAIMode = false;
+
   [Header("Dependencies")]
   [SerializeField] private UIManager uiManager;
 

@@ -4,6 +4,9 @@ using UnityEngine;
 public class AntUnit : BaseUnit
 {
   [SerializeField] private float searchGridRadius = 0.5f;
+
+  private Vector3 originalPosition;
+
   public override void Move(Vector3 targetPosition)
   {
     if (stats == null) return;
@@ -17,11 +20,17 @@ public class AntUnit : BaseUnit
     }
   }
 
+  protected override void Awake()
+  {
+    base.Awake();
+    originalPosition = transform.position;
+  }
+
   protected override void Update()
   {
     base.Update();
 
-    if (stats.isFriendly && !isMoving && currentTarget == null)
+    if (stats.isFriendly && !IsBusy())
     {
       BaseUnit nextTarget = FindClosestEnemy();
       if (nextTarget != null)
@@ -53,8 +62,18 @@ public class AntUnit : BaseUnit
       }
     }
 
+    if (GameManager.Instance.isAIMode)
+    {
+      // No enemies found — return to original position
+      if (closest == null && Vector3.Distance(transform.position, originalPosition) > 0.1f)
+      {
+        MoveToPosition(originalPosition);
+      }
+    }
+
     return closest;
   }
+
 
 
 }

@@ -11,8 +11,10 @@ public class UnitWaveSpawner : MonoBehaviour
   [SerializeField] private float spawnGap = 1.5f;
   [SerializeField] private Transform targetPoint;
 
-  [Header("Optional Debug")]
+  [Header("Other")]
   [SerializeField] private bool autoSpawnOnStart = true;
+  [SerializeField] private bool isDefender = false;
+  [SerializeField] private DefenderCentralAIController defenderCAC;
 
   private List<Vector3> usedPositions = new List<Vector3>();
 
@@ -39,9 +41,13 @@ public class UnitWaveSpawner : MonoBehaviour
         GameObject unit = Instantiate(unitPrefab, spawnPos, Quaternion.identity);
         BaseUnit baseUnit = unit.GetComponent<BaseUnit>();
 
-        if (baseUnit && !baseUnit.stats.isFriendly)
+        if (!isDefender)
         {
           GameManager.Instance.RegisterEnemy();
+        }
+        else if (defenderCAC)
+        {
+          defenderCAC.RegisterDefender(baseUnit);
         }
 
         if (baseUnit != null && targetPoint != null)

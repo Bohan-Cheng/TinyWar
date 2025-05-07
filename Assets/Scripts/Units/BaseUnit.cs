@@ -21,6 +21,10 @@ public abstract class BaseUnit : MonoBehaviour
   [SerializeField] private float animScale = 0.065f;
   [SerializeField] private float animSpeed = 10f;
 
+  public bool IsBusy()
+  {
+    return isMoving || currentTarget != null;
+  }
 
   protected virtual void Awake()
   {
@@ -76,6 +80,7 @@ public abstract class BaseUnit : MonoBehaviour
     }
     else
     {
+      isMoving = false;
       transform.localScale = originalScale;
       walkAnimTimer = 0f;
     }
