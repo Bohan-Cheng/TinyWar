@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
   [Header("Dependencies")]
   [SerializeField] private UIManager uiManager;
+  [SerializeField] private AudioSource deathAudio;
 
   [Header("Game State")]
   private int totalEnemies;
@@ -35,6 +36,8 @@ public class GameManager : MonoBehaviour
   public void OnEnemyDefeated(int points = 1)
   {
     if (gameEnded) return;
+
+    deathAudio.PlayOneShot(deathAudio.clip);
 
     defeatedEnemies++;
     score += points;
